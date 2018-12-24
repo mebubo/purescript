@@ -50,7 +50,7 @@ caseSplit :: (Ide m, MonadError IdeError m) =>
 caseSplit q = do
   type' <- parseType' q
   (tc, args) <- splitTypeConstructor type'
-  (EDType _ _ (P.DataType typeVars ctors)) <- findTypeDeclaration tc
+  ~((EDType _ _ (P.DataType typeVars ctors))) <- findTypeDeclaration tc
   let applyTypeVars = P.everywhereOnTypes (P.replaceAllTypeVars (zip (map fst typeVars) args))
   let appliedCtors = map (second (map applyTypeVars)) ctors
   pure appliedCtors

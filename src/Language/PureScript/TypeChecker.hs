@@ -277,7 +277,7 @@ typeCheckAll moduleName _ = traverse go
     warnAndRethrow (addHint (ErrorInValueDeclaration name) . addHint (positionedError ss)) . censorLocalUnnamedWildcards val $ do
       val' <- checkExhaustiveExpr ss env moduleName val
       valueIsNotDefined moduleName name
-      [(_, (val'', ty))] <- typesOf NonRecursiveBindingGroup moduleName [((sa, name), val')]
+      ~([(_, (val'', ty))]) <- typesOf NonRecursiveBindingGroup moduleName [((sa, name), val')]
       addValue moduleName name ty nameKind
       return $ ValueDecl sa name nameKind [] [MkUnguarded val'']
     where
